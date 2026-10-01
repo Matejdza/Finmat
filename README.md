@@ -1,42 +1,41 @@
-# FINMAT — predlozi dizajna sajta (radna verzija)
+# FINMAT · sajt (prototip D)
 
-Pregled dva predloga za klijenta. Fotografije radova stižu naknadno, pa su na njihovim mestima prazna polja „Fotografija uskoro“.
+Radna verzija sajta za pregled sa klijentom. Napravljena je iz prototipa D sa canvasa.
 
 ```
-index.html      početna: izbor između predloga B i D
-b/index.html    predlog B — Tamni luksuz (crna i zlatna)
-d/index.html    predlog D — Grafit (tamna grafitna paleta)
-.nojekyll       da GitHub Pages ne obrađuje fajlove
+index.html     ceo sajt (CSS i JS su u fajlu)
+img/           hero slika, fotografije radova, ikonica za telefon
+d/index.html   preusmerava stari link /d/ na početnu
+.nojekyll      da GitHub Pages ne obrađuje fajlove
 ```
 
-Svaki predlog je jedan HTML fajl (CSS i JS su u njemu). Nema build koraka ni zavisnosti, samo fontovi sa Google Fonts.
+Sajt sam bira raspored prema širini ekrana:
+- telefon do 599 px
+- tablet od 600 do 1199 px
+- računar od 1200 px
+
+Provereno na širinama 320–1920 px, u Chrome-u i Safari-ju, na Android-u i iOS-u, bez horizontalnog skrolovanja.
 
 ## Postavljanje na GitHub Pages
 
-1. Na github.com napravite novi repozitorijum, npr. `finmat`. Može da bude Public.
-2. **Add file → Upload files**. Prevucite **sadržaj** foldera `finmat-github` (`index.html`, folderi `b` i `d`, `.nojekyll`, ovaj README), pa kliknite **Commit changes**.
-   - Fajl `.nojekyll` je skriven. Na Mac-u ga u Finder-u prikažite sa Cmd+Shift+. ; bez njega sajt i dalje radi.
-3. **Settings → Pages → Build and deployment**: Source **Deploy from a branch**, Branch **main**, folder **/ (root)**, pa **Save**.
-4. Posle 1–2 minuta sajt je na:
-   - `https://<korisnik>.github.io/finmat/` — početna sa izborom
-   - `https://<korisnik>.github.io/finmat/b/` — predlog B
-   - `https://<korisnik>.github.io/finmat/d/` — predlog D
-
-Ako umesto novog repozitorijuma koristite postojeći `<korisnik>.github.io`, stavite sve u podfolder `finmat/` i adrese su iste kao gore.
+1. U postojećem repozitorijumu (npr. `finmat`) obrišite stare fajlove: `index.html`, folder `b`, folder `d`.
+2. **Add file → Upload files**, pa prevucite **sadržaj** foldera `finmat-github`: `index.html`, foldere `img` i `d`, `.nojekyll` i ovaj README. Zatim **Commit changes**.
+   - Fajl `.nojekyll` je skriven. Na Mac-u ga u Finder-u prikažete sa Cmd+Shift+. ; bez njega sajt i dalje radi.
+3. **Settings → Pages**: Branch **main**, folder **/ (root)**, pa **Save**. Ako je ovo već podešeno, ne treba ništa menjati.
+4. Posle 1–2 minuta sajt je na `https://<korisnik>.github.io/finmat/`. Stari link `.../finmat/d/` vodi na istu stranicu.
 
 ## Šta radi u ovoj verziji
 
-- Prilagođeno za računar, tablet i telefon (Chrome, Safari, Firefox; Android i iOS). Provereno na širinama 1440, 768, 390 i 320 px, bez horizontalnog skrolovanja.
-- Meni: na telefonu i tabletu preko celog ekrana; Escape ga zatvara.
-- Galerija: filter po vrsti prostora i prikaz preko celog ekrana sa strelicama, sličicama, tastaturom (← → Esc) i prevlačenjem prstom.
-- Forma za upit: proverava obavezna polja. Dok se ne upiše Web3Forms ključ, pravi gotovu poruku koja se šalje na WhatsApp jednim klikom ili se kopira za Viber.
-- Na telefonu: donja traka Pozovi / WhatsApp / Upit.
-- Samo D, na telefonu: usluge kao spisak koji se otvara dodirom, „Kako radimo“ kao slajder, izbor usluga u formi kao padajući meni.
-- Stranice imaju `noindex`, pa ih Google ne prikazuje u pretrazi dok su u izradi.
+- **Galerija:** 17 fotografija u 13 pločica, od toga 4 pre/posle. Ima filtere, dugme „Prikaži još radova“ i prikaz preko celog ekrana (Uporedi / Pre / Posle).
+- **Usluge:** klik na uslugu je označi u formi za upit.
+- **Forma:** usluge se biraju iz padajućeg menija. Posle slanja prikazuje gotovu poruku koja se šalje na WhatsApp ili kopira za Viber.
+- **Česta pitanja:** polje „Pitajte nas“. Odgovori su zasad unapred pripremljeni po ključnim rečima, ne daje ih pravi AI.
+- **Kontakt kartice:** imaju dugme za kopiranje broja i email adrese.
+- **Na telefonu:** donja traka Pozovi / WhatsApp / Upit i slajder „Kako radimo“.
 
 ## Pre objavljivanja pravog sajta
 
-- **Upiti na email:** napravite besplatan ključ na web3forms.com (na email firme) i upišite ga u `const WEB3FORMS_KEY = "";` u `b/index.html` ili `d/index.html`.
-- **Fotografije:** umesto praznih polja u galeriji i hero delu. Sistem za zamenu slika se dodaje kad stignu fotografije.
-- **Tekstovi za potvrdu sa klijentom:** odgovori u Čestim pitanjima (besplatna procena, rokovi, materijal), glavni broj za WhatsApp (sada Dejanov), linkovi ka Instagramu i Facebooku.
-- **Za domen:** skinuti `noindex`, dodati Open Graph sliku za deljenje linka i favicon u PNG formatu.
+- **Upiti na email:** napravite besplatan ključ na web3forms.com (na email firme). Upišite ga u `var WEB3FORMS_KEY = '';` pri dnu `index.html`.
+- **Pravi AI asistent:** treba povezati AI servis (npr. Claude API preko male serverske funkcije), uz uputstvo šta firma radi i šta sme da obeća.
+- **Pretraga:** obrišite red `<meta name="robots" content="noindex, nofollow">`, pa Google može da prikaže sajt. Kad postoji domen, u `og:image` upišite punu adresu slike (npr. `https://finmat.rs/img/hero-renoviranje.jpg`).
+- **Za potvrdu sa klijentom:** tekstovi u Čestim pitanjima, „besplatna procena“ u hero delu i formi, glavni broj za WhatsApp (sada Dejanov), nazivi fotografija u galeriji.
